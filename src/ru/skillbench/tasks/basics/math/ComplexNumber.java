@@ -110,7 +110,7 @@ public interface ComplexNumber extends Comparable<ComplexNumber>, Cloneable {
 	String toString();
 	/**
 	 * Checks whether some other object is "equal to" this number.
-	 * @param other Any implementation of {@link ComplexNumber} interface (may not )
+	 * @param other Any implementation of {@link ComplexNumber} interface (may not)
 	 * @see Object#equals(Object)
 	 */
 	boolean equals(Object other);

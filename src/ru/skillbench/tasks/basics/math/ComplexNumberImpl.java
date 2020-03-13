@@ -105,7 +105,8 @@ public class ComplexNumberImpl implements ComplexNumber {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() == o.getClass()) return false;
-        ComplexNumber that = (ComplexNumber) o;
+        if (o.getClass() != ComplexNumberImpl.class) return false;
+        ComplexNumberImpl that = (ComplexNumberImpl) o;
         return Double.compare(that.getRe(), re) == 0 &&
                 Double.compare(that.getIm(), im) == 0;
     }

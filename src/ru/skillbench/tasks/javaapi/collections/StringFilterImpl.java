@@ -2,6 +2,8 @@ package ru.skillbench.tasks.javaapi.collections;
 
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringFilterImpl implements StringFilter {
 
@@ -30,7 +32,7 @@ public class StringFilterImpl implements StringFilter {
             return strs.iterator();
         }
 
-        return strs.stream().filter(it -> it.contains(chars)).iterator();
+        return strs.stream().filter(it -> it != null && it.contains(chars)).iterator();
     }
 
     public Iterator<String> getStringsStartingWith(String begin) {
@@ -38,12 +40,17 @@ public class StringFilterImpl implements StringFilter {
             return strs.iterator();
         }
 
-        return strs.stream().filter(it -> it.startsWith(begin)).iterator();
+        return strs.stream().filter(it -> it != null && it.startsWith(begin.toLowerCase())).iterator();
     }
 
     public Iterator<String> getStringsByNumberFormat(String format) {
+        if (format == null || format.isEmpty()) {
+            return strs.iterator();
+        }
+
         List<String> res = new LinkedList<>();
         for (String x : strs) {
+            if (x == null) continue;
             boolean addded = true;
             for (int i = 0; i < x.toCharArray().length; i++) {
                 if (format.charAt(i) != x.charAt(i) && !digits.contains(x.charAt(i))) {
@@ -62,6 +69,19 @@ public class StringFilterImpl implements StringFilter {
     }
 
     public Iterator<String> getStringsByPattern(String pattern) {
-        return null;
+        if (pattern == null || pattern.isEmpty()) {
+            return strs.iterator();
+        }
+
+        String regex = pattern.replace("*", ".*");
+        Pattern pat = Pattern.compile(regex);
+        Matcher matcher;
+
+        List<String> res = new LinkedList<>();
+        for (String x : strs) {
+            if (x == null) continue;
+            if (pat.matcher(x).matches()) res.add(x);
+        }
+        return res.iterator();
     }
 }

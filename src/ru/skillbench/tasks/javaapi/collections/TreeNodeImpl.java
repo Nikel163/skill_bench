@@ -23,12 +23,12 @@ public class TreeNodeImpl implements TreeNode {
 
     @Override
     public TreeNode getRoot() {
-        return this.parent != null ? this.parent.getRoot() : this;
+        return this.parent != null ? this.parent.getRoot() : null;
     }
 
     @Override
     public boolean isLeaf() {
-        return this.children.size() == 0;
+        return this.children == null;
     }
 
     @Override
@@ -63,6 +63,11 @@ public class TreeNodeImpl implements TreeNode {
 
     @Override
     public void setExpanded(boolean expanded) {
+        Iterator<TreeNode> child = getChildrenIterator();
+        if (child == null) return;
+        while (child.hasNext()) {
+            child.next().setExpanded(expanded);
+        }
         this.expanded = expanded;
     }
 

@@ -12,16 +12,16 @@ public class Main {
         node1.setData("node1");
         TreeNode node2 = new TreeNodeImpl();
         node2.setData("node2");
-        node2.setParent(node1);
         TreeNode node3 = new TreeNodeImpl();
-        node3.setParent(node2);
         root.addChild(node1);
+        node1.addChild(node2);
+        node2.addChild(node3);
         System.out.println(root);
         System.out.println(node1);
         System.out.println(node2);
         System.out.println(node3);
 
-        System.out.println(root.findChild("node2"));
+        System.out.println(root.findChild(true));
     }
 
 }
